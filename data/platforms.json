@@ -1,0 +1,140 @@
+{
+	"platforms": [
+		{
+			"id": "schwab",
+			"name": "Charles Schwab",
+			"stockCommission": "$0",
+			"optionsFees": "$0.65/contract",
+			"minimumDeposit": "$0",
+			"bestFor": "All-around investors",
+			"mobileApp": "Excellent",
+			"researchTools": "Excellent",
+			"rating": 4.8,
+			"strengths": [
+				"No account minimums",
+				"thinkorswim platform integrated (post-TD Ameritrade merger)",
+				"24/7 world-class customer service",
+				"Wide range of investment options including fractional shares"
+			],
+			"weaknesses": [
+				"Platform interface can be overwhelming for beginners",
+				"Options fees remain higher than modern zero-fee competitors"
+			],
+			"targetInvestor": "Investors seeking comprehensive research tools, top-tier platforms, and long-term investing support"
+		},
+		{
+			"id": "fidelity",
+			"name": "Fidelity Investments",
+			"stockCommission": "$0",
+			"optionsFees": "$0.65/contract",
+			"minimumDeposit": "$0",
+			"bestFor": "Long-term investors",
+			"mobileApp": "Excellent",
+			"researchTools": "Excellent",
+			"rating": 4.9,
+			"strengths": [
+				"Outstanding research capabilities",
+				"Uninvested cash automatically sweeps to high-yield core position",
+				"Fractional shares available for stocks and ETFs",
+				"Zero expense ratio mutual funds available"
+			],
+			"weaknesses": [
+				"Active futures traders may prefer other platforms",
+				"Mobile UI can feel slightly dated compared to fintech startups"
+			],
+			"targetInvestor": "Buy-and-hold investors focused on retirement, compound interest, and wealth building"
+		},
+		{
+			"id": "etrade",
+			"name": "E*TRADE by Morgan Stanley",
+			"stockCommission": "$0",
+			"optionsFees": "$0.50-$0.65/contract",
+			"minimumDeposit": "$0",
+			"bestFor": "Active traders",
+			"mobileApp": "Very Good",
+			"researchTools": "Very Good",
+			"rating": 4.6,
+			"strengths": [
+				"Power E*TRADE platform is elite for derivatives",
+				"Strong options trading tools with volume discounts ($0.50/contract)",
+				"Backed by Morgan Stanley institutional research",
+				"Competitive margin rates"
+			],
+			"weaknesses": [
+				"Website navigation can be clunky",
+				"Some advanced screening tools require higher account balances"
+			],
+			"targetInvestor": "Active traders and options enthusiasts seeking professional-grade tools"
+		},
+		{
+			"id": "robinhood",
+			"name": "Robinhood",
+			"stockCommission": "$0",
+			"optionsFees": "$0",
+			"minimumDeposit": "$0",
+			"bestFor": "Mobile-first investors",
+			"mobileApp": "Excellent",
+			"researchTools": "Basic",
+			"rating": 4.3,
+			"strengths": [
+				"Extremely simple, gamified interface",
+				"No options contract fees",
+				"1-3% matching on IRA retirement contributions (with Gold subscription)",
+				"24/5 trading capabilities and crypto access"
+			],
+			"weaknesses": [
+				"Limited advanced charting and research tools",
+				"Customer service relies heavily on in-app chat",
+				"Payment for Order Flow (PFOF) model raises execution quality concerns for large orders"
+			],
+			"targetInvestor": "First-time investors and cost-conscious options traders wanting a simple, mobile-first experience"
+		},
+		{
+			"id": "webull",
+			"name": "Webull",
+			"stockCommission": "$0",
+			"optionsFees": "$0",
+			"minimumDeposit": "$0",
+			"bestFor": "Intermediate active traders",
+			"mobileApp": "Excellent",
+			"researchTools": "Very Good",
+			"rating": 4.5,
+			"strengths": [
+				"Advanced charting natively built into mobile and desktop",
+				"Zero commission on options trading",
+				"Robust pre-market and after-hours trading hours",
+				"Paper trading available for strategy testing"
+			],
+			"weaknesses": [
+				"Steep learning curve for absolute beginners",
+				"Customer support is less robust than legacy brokers",
+				"Limited mutual fund offerings"
+			],
+			"targetInvestor": "Technical traders seeking advanced charting and zero-fee options without the legacy institutional overhead"
+		},
+		{
+			"id": "interactivebrokers",
+			"name": "Interactive Brokers",
+			"stockCommission": "$0 (Lite) / Variable (Pro)",
+			"optionsFees": "$0.15-$0.65/contract",
+			"minimumDeposit": "$0",
+			"bestFor": "Advanced and international traders",
+			"mobileApp": "Good",
+			"researchTools": "Excellent",
+			"rating": 4.7,
+			"strengths": [
+				"Lowest margin rates in the industry",
+				"Access to global markets across dozens of countries",
+				"Advanced algorithmic order types",
+				"No inactivity fees"
+			],
+			"weaknesses": [
+				"TWS Desktop platform has an incredibly steep learning curve",
+				"Pricing tiers (Lite vs. Pro) can be confusing to navigate",
+				"Overkill for simple buy-and-hold index investors"
+			],
+			"targetInvestor": "Sophisticated, high-net-worth traders needing international market access, low margin rates, and algorithmic execution"
+		}
+	],
+	"lastUpdated": "2026-03-03"
+}
