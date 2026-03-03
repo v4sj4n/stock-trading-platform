@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useCompletion } from "@ai-sdk/react";
+import { readStreamableValue } from "@ai-sdk/rsc";
 import platformsData from "@/data/platforms.json";
+import { comparePlatformsAction } from "./actions";
 import { AiModal } from "@/components/AiModal";
 import {
 	ShieldCheck,
@@ -21,15 +22,9 @@ export default function Home() {
 	const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>([]);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const {
-		completion,
-		complete,
-		isLoading,
-		error: aiError,
-	} = useCompletion({
-		api: "/api/compare",
-		streamProtocol: "text",
-	});
+	const [completion, setCompletion] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [aiError, setAiError] = useState<Error | null>(null);
 
 	const platforms = platformsData.platforms;
 
@@ -43,15 +38,26 @@ export default function Home() {
 
 	const handleCompare = async () => {
 		if (selectedPlatforms.length < 2) return;
+
 		setIsModalOpen(true);
+		setIsLoading(true);
+		setCompletion("");
+		setAiError(null);
 
 		try {
 			const platformNames = selectedPlatforms.map(
 				(id) => platforms.find((p) => p.id === id)?.name,
 			);
-			await complete(platformNames.join(", "));
-		} catch (err) {
+
+			const stream = await comparePlatformsAction(platformNames.join(", "));
+			for await (const delta of readStreamableValue(stream)) {
+				setCompletion((current) => current + (delta ?? ""));
+			}
+		} catch (err: any) {
 			console.error(err);
+			setAiError(err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -197,11 +203,10 @@ export default function Home() {
 							return (
 								<div
 									key={platform.id}
-									className={`group relative flex w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border bg-white p-6 transition-all duration-300 cursor-pointer hover:shadow-xl dark:bg-slate-900/50 dark:hover:bg-slate-900/80 md:w-[380px] ${
-										isSelected
-											? "border-emerald-600 bg-emerald-50/30 shadow-lg ring-1 ring-emerald-600 dark:border-emerald-500/50 dark:bg-emerald-500/5 dark:ring-emerald-500/50"
-											: "border-slate-200/60 shadow-sm hover:border-emerald-200 dark:border-slate-800/60 dark:hover:border-emerald-900/50 dark:shadow-none"
-									}`}
+									className={`group relative flex w-[320px] shrink-0 snap-center flex-col overflow-hidden rounded-2xl border bg-white p-6 transition-all duration-300 cursor-pointer hover:shadow-xl dark:bg-slate-900/50 dark:hover:bg-slate-900/80 md:w-[380px] ${isSelected
+										? "border-emerald-600 bg-emerald-50/30 shadow-lg ring-1 ring-emerald-600 dark:border-emerald-500/50 dark:bg-emerald-500/5 dark:ring-emerald-500/50"
+										: "border-slate-200/60 shadow-sm hover:border-emerald-200 dark:border-slate-800/60 dark:hover:border-emerald-900/50 dark:shadow-none"
+										}`}
 									onClick={() => toggleSelection(platform.id)}
 								>
 									<div
@@ -224,11 +229,10 @@ export default function Home() {
 											</div>
 										</div>
 										<div
-											className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-												isSelected
-													? "bg-emerald-600 border-emerald-600 text-white dark:bg-emerald-500/20 dark:border-emerald-400 dark:text-emerald-400"
-													: "border-slate-200 bg-slate-50 text-transparent dark:border-slate-800 dark:bg-slate-800/50"
-											}`}
+											className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${isSelected
+												? "bg-emerald-600 border-emerald-600 text-white dark:bg-emerald-500/20 dark:border-emerald-400 dark:text-emerald-400"
+												: "border-slate-200 bg-slate-50 text-transparent dark:border-slate-800 dark:bg-slate-800/50"
+												}`}
 										>
 											<CheckCircle2
 												className={`h-4 w-4 ${isSelected ? "opacity-100" : "opacity-0"}`}
@@ -306,11 +310,10 @@ export default function Home() {
 						<button
 							onClick={handleCompare}
 							disabled={selectedPlatforms.length < 2}
-							className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-								selectedPlatforms.length >= 2
-									? "bg-emerald-800 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white shadow-sm hover:shadow active:scale-[0.98]"
-									: "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed"
-							}`}
+							className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${selectedPlatforms.length >= 2
+								? "bg-emerald-800 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white shadow-sm hover:shadow active:scale-[0.98]"
+								: "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed"
+								}`}
 						>
 							<Bot className="w-4 h-4" />
 							Generate AI Analysis
